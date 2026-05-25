@@ -204,10 +204,75 @@ with tab1:
         st.markdown("Lorsque la résistance série augmente, la vitesse diminue à cause de la chute de tension.")
 
 # =========================================================
+# Fonctions mathématiques (À placer AVANT l'onglet dynamique)
+# =========================================================
+
+# Modèle en boucle ouverte (Équations différentielles de la MCC)
+def modele_boucle_ouverte(t, y, U, Cr):
+    I, omega = y
+    dI_dt = (U - R * I - K * omega) / L
+    domega_dt = (K * I - Cr - f * omega) / J
+    return [dI_dt, domega_dt]
+
+# Modèle avec Correcteur Proportionnel (P)
+def modele_P(t, y):
+    I, omega = y
+    erreur = omega_ref - omega
+    U_commande = np.clip(Kp * erreur, -Umax, Umax)
+    dI_dt = (U_commande - R * I - K * omega) / L
+    domega_dt = (K * I - Cr - f * omega) / J
+    return [dI_dt, domega_dt]
+
+# Modèle avec Correcteur Proportionnel-Intégral (PI)
+def modele_PI(t, y):
+    I, omega, erreur_integrale = y
+    erreur = omega_ref - omega
+    d_erreur_int = erreur
+    U_commande = np.clip(Kp * erreur + Ki * erreur_integrale, -Umax, Umax)
+    
+    dI_dt = (U_commande - R * I - K * omega) / L
+    domega_dt = (K * I - Cr - f * omega) / J
+    return [dI_dt, domega_dt, d_erreur_int]
+
+# Fonction d'affichage simplifiée
+def afficher_figure(fig):
+    st.pyplot(fig)
+    plt.close(fig)
+
+# Calcul des métriques de performance
+def calcul_metriques(t, w, w_ref):
+    omega_max = np.max(w)
+    valeur_finale = w[-1]
+    
+    # Dépassement (%)
+    if valeur_finale > 0:
+        dep = max(0, (omega_max - valeur_finale) / valeur_finale * 100)
+    else:
+        dep = 0.0
+        
+    # Erreur statique (%)
+    if w_ref > 0:
+        err_stat = abs(w_ref - valeur_finale) / w_ref * 100
+    else:
+        err_stat = 0.0
+        
+    # Temps de réponse à 95% (tr95)
+    tr95 = np.nan
+    for i in range(len(t)):
+        if all(abs(w[k] - valeur_finale) <= 0.05 * abs(valeur_finale) for k in range(i, len(t))):
+            tr95 = t[i]
+            break
+            
+    return omega_max, dep, err_stat, tr95
+
+# =========================================================
 # Onglet 2 : régime dynamique
 # =========================================================
 with tab2:
     st.header("Étude dynamique")
+
+    # ... (Votre code reste exactement le même ici, pas de changement nécessaire) ...
+    # ... (Voir votre extrait original pour la création des figures) ...
 
     t_eval = np.linspace(0, t_final, 1000)
 
@@ -227,7 +292,6 @@ with tab2:
     )
 
     t = t_eval
-
     I_bo, w_bo = sol_bo.y[0], sol_bo.y[1]
     I_p, w_p = sol_p.y[0], sol_p.y[1]
     I_pi, w_pi = sol_pi.y[0], sol_pi.y[1]
@@ -290,18 +354,7 @@ with tab2:
         c4.metric("Temps à 95 %", f"{tr95:.3f} s")
 
 # =========================================================
-# Onglet 3 : conclusion
+# Onglet 3 : conclusion (Enrichie)
 # =========================================================
 with tab3:
-    st.header("Conclusion")
-    st.markdown("""
-    L’étude en régime permanent montre l’influence de la tension d’induit, du flux d’excitation,
-    de la résistance série et du couple sur la vitesse de la MCC.
-
-    L’étude dynamique permet d’observer le comportement temporel du moteur. La boucle ouverte est simple,
-    mais elle ne corrige pas automatiquement l’erreur de vitesse. La commande P améliore la réponse,
-    tandis que la commande PI permet généralement de réduire l’erreur statique grâce à l’action intégrale.
-
-    Cette application peut être utilisée comme outil pédagogique pour aider les étudiants à comprendre
-    les méthodes de commande d’une Machine à Courant Continu.
-    """)
+    st.header("Conclusion et
