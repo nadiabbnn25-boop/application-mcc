@@ -3,6 +3,12 @@ import streamlit as st
 import numpy as np  
 import matplotlib.pyplot as plt
 import pandas as pd  
+from scipy.integrate import solve_ivp  # <--- LA LIGNE À AJOUTER EST ICI !
+
+# 2. Configuration de la page
+st.set_page_config(page_title="PFE MCC", layout="wide")
+
+# ... (le reste du code) 
 
 # 2. Configuration de la page (DOIT ÊTRE LA PREMIÈRE COMMANDE STREAMLIT)
 st.set_page_config(page_title="PFE MCC", layout="wide")
