@@ -8,16 +8,17 @@ from scipy.integrate import solve_ivp
 # 2. L'UNIQUE configuration de la page (gardez seulement celle-ci !)
 st.set_page_config(page_title="PFE MCC", layout="wide")
 
-# 3. La suite de votre code (Université, Titre, etc.)
+# 3. En-tête et Titre
 st.markdown("<div style='text-align: center; font-size: 26px; color: #2C3E50; margin-bottom: 10px;'>Université Batna 2<br>Département d'Électromécanique</div>", unsafe_allow_html=True)
-# ...
 
+# ---> LE GRAND TITRE EST DE RETOUR ICI <---
+st.title("Étude théorique et simulation des méthodes de commande de la Machine à Courant Continu (MCC)")
 
 # Le sous-titre
 st.markdown("<h3 style='text-align: center; color: #555555; font-weight: normal; margin-top: -15px;'>Développement d’une application web pédagogique interactive</h3>", unsafe_allow_html=True)
 
 # ─────────────────────────────────────────
-# 4. Menu déroulant "À propos" (Placé ici, sous le titre)
+# 4. Menu déroulant "À propos"
 # ─────────────────────────────────────────
 with st.expander("ℹ️ À propos de ce projet (Crédits)"):
     st.write("Ce simulateur a été développé dans le cadre des travaux pratiques de Licence 3 Électromécanique.")
@@ -26,9 +27,9 @@ with st.expander("ℹ️ À propos de ce projet (Crédits)"):
     with col1:
         st.markdown("**🎓 Réalisé par :**")
         st.markdown("""
-     * M.A.A BACHA M                
-     * Y BASSOU             
-     * A ENAMMAR 
+        - M.A.A BACHA
+        - Y. BAASSOU
+        - A. BENAMMAR
         """)
     with col2:
         st.markdown("**👨‍🏫 Encadré par :**")
@@ -36,6 +37,14 @@ with st.expander("ℹ️ À propos de ce projet (Crédits)"):
         
     st.markdown("**📅 Année universitaire :** 2025/2026")
 
+# ─────────────────────────────────────────
+# 5. Introduction de l'application
+# ─────────────────────────────────────────
+st.markdown("""
+Cette application pédagogique permet d’étudier une Machine à Courant Continu en **régime permanent**
+et en **régime dynamique**. Elle permet de modifier les paramètres de la machine et d’observer
+les courbes principales.
+""")
 # ─────────────────────────────────────────
 # 5. Introduction de l'application
 # ─────────────────────────────────────────
