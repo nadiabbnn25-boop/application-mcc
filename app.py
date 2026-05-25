@@ -277,3 +277,21 @@ with tab2:
         c4.metric("Temps à 95 %", "Non atteint")
     else:
         c4.metric("Temps à 95 %", f"{tr95:.3f} s")
+# =========================================================
+# Onglet 3 : Conclusion et Perspectives
+# =========================================================
+with tab3:
+    st.header("Conclusion et Perspectives")
+    st.markdown("""
+    L’étude en régime permanent de la Machine à Courant Continu a permis de mettre en évidence l’influence 
+    directe de la tension d’induit, du flux d’excitation et du couple résistant sur la vitesse de rotation.
+
+    L’analyse en régime dynamique démontre le comportement transitoire du moteur. Si la commande en boucle 
+    ouverte s'avère insuffisante face aux perturbations, l'intégration d'un correcteur Proportionnel (P) 
+    améliore la réactivité. L'ajout de l'action intégrale (Correcteur PI) est quant à lui indispensable 
+    pour annuler l'erreur statique et garantir un suivi parfait de la consigne.
+
+    **Perspectives pédagogiques :**
+    La conception de cet outil web interactif, présentée avec succès lors de la soutenance des posters, valide l'intérêt majeur des simulations numériques pour la modernisation de l'enseignement. 
+    À l'instar des travaux menés en parallèle sur le transformateur de puissance, ce simulateur a vocation à être intégré de manière pérenne comme support de travaux pratiques. Il permettra aux futures promotions de Licence 3 d'assimiler les stratégies de commande complexes grâce à une approche visuelle et interactive.
+    """)
