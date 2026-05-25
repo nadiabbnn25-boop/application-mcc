@@ -30,9 +30,9 @@ with st.expander("ℹ️ À propos de ce projet (Crédits)"):
     with col1:
         st.markdown("**🎓 Réalisé par :**")
         st.markdown("""
-        - [Nom de l'étudiant 1]
-        - [Nom de l'étudiant 2]
-        - [Nom de l'étudiant 3]
+     - M.A.A BACHA M                
+    - Y BASSOU             
+- A ENAMMAR 
         """)
     with col2:
         st.markdown("**👨‍🏫 Encadré par :**")
@@ -70,32 +70,6 @@ Ki = st.sidebar.number_input("Gain intégral Ki", value=10.0, step=1.0)
 
 Umax = st.sidebar.number_input("Limite de tension Umax (V)", value=24.0, step=1.0)
 t_final = st.sidebar.number_input("Durée de simulation (s)", value=4.0, step=0.5)
-
-# Suite de votre code...
-# ─────────────────────────────────────────
-# 4. Menu déroulant "À propos"
-# ─────────────────────────────────────────
-with st.expander("ℹ️ À propos de ce projet (Crédits)"):
-    # J'ai gardé uniquement "Électrotechnique" pour être en accord avec votre département, mais vous pouvez remettre "Électromécanique" si besoin.
-    st.write("Ce simulateur a été développé dans le cadre des travaux pratiques de Licence 3 Électrotechnique.")
-    
-    # Création de deux colonnes pour une belle présentation
-# Création de deux colonnes pour une belle présentation
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("**🎓 Réalisé par :**")
-        st.markdown("""
-- M.A.A BACHA M                
-- Y BASSOU             
-- A ENAMMAR 
-        """)
-        
-    with col2:
-        st.markdown("**👨‍🏫 Encadré par :**")
-        st.markdown("- Dr. N. Benbouza")
-        
-    st.markdown("**📅 Année universitaire :** 2025/2026")
 
 # =========================================================
 # Fonctions utiles
