@@ -192,6 +192,27 @@ with tab1:
 # =========================================================
 # Onglet 2 : régime dynamique
 # =========================================================
+# =========================================================
+# Onglet 2 : régime dynamique
+# =========================================================
+with tab2:
+    st.header("Étude dynamique")
+    
+    # ─────────────────────────────────────────
+    # LA CORRECTION EST ICI : 
+    # On force l'importation locale de solve_ivp
+    # ─────────────────────────────────────────
+    from scipy.integrate import solve_ivp
+    
+    t_eval = np.linspace(0, t_final, 1000)
+
+    # Appel de la boucle ouverte
+    sol_bo = solve_ivp(
+        modele_boucle_ouverte,
+        [0, t_final], [0, 0], t_eval=t_eval, rtol=1e-6, atol=1e-8
+    )
+    
+    # ... (le reste de votre code de l'onglet 2 reste identique)
 with tab2:
     st.header("Étude dynamique")
     t_eval = np.linspace(0, t_final, 1000)
