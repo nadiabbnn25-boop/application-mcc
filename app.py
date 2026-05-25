@@ -10,7 +10,7 @@ st.set_page_config(page_title="PFE MCC", layout="wide")
 
 # 3. En-tête et Titre
 st.markdown("<div style='text-align: center; font-size: 26px; color: #2C3E50; margin-bottom: 10px;'>Université Batna 2<br>Département d'Électromécanique</div>", unsafe_allow_html=True)
-st.title("Étude théorique et simulation des méthodes de commande de la Machine à Courant Continu (MCC)")
+st.title("Étude théorique et simulation des méthodes de commande de la Machine à Courant Continu (MCC) - TEST")
 st.markdown("<h3 style='text-align: center; color: #555555; font-weight: normal; margin-top: -15px;'>Développement d’une application web pédagogique interactive</h3>", unsafe_allow_html=True)
 
 # 4. Menu déroulant "À propos"
