@@ -30,9 +30,9 @@ with st.expander("ℹ️ À propos de ce projet (Crédits)"):
     with col1:
         st.markdown("**🎓 Réalisé par :**")
         st.markdown("""
-     - M.A.A BACHA M                
-    - Y BASSOU             
-- A ENAMMAR 
+     * M.A.A BACHA M                
+     * Y BASSOU             
+     * A ENAMMAR 
         """)
     with col2:
         st.markdown("**👨‍🏫 Encadré par :**")
