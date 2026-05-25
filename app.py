@@ -18,7 +18,7 @@ st.markdown("<div style='text-align: center; font-size: 26px; color: #2C3E50; ma
 st.markdown("---")
 
 # 2. Le grand titre de l'étude
-st.title("Étude théorique et simulation des méthodes de commande de la Machine à Courant Continu (MCC)
+st.title("Étude théorique et simulation des méthodes de commande de la Machine à Courant Continu (MCC)")
 ")
 
 # 3. Le sous-titre (La phrase de votre image)
