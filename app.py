@@ -5,24 +5,17 @@ import matplotlib.pyplot as plt
 import pandas as pd  
 from scipy.integrate import solve_ivp  
 
-# 2. L'UNIQUE configuration de la page (gardez seulement celle-ci !)
+# 2. L'UNIQUE configuration de la page
 st.set_page_config(page_title="PFE MCC", layout="wide")
 
 # 3. En-tête et Titre
 st.markdown("<div style='text-align: center; font-size: 26px; color: #2C3E50; margin-bottom: 10px;'>Université Batna 2<br>Département d'Électromécanique</div>", unsafe_allow_html=True)
-
-# ---> LE GRAND TITRE EST DE RETOUR ICI <---
 st.title("Étude théorique et simulation des méthodes de commande de la Machine à Courant Continu (MCC)")
-
-# Le sous-titre
 st.markdown("<h3 style='text-align: center; color: #555555; font-weight: normal; margin-top: -15px;'>Développement d’une application web pédagogique interactive</h3>", unsafe_allow_html=True)
 
-# ─────────────────────────────────────────
 # 4. Menu déroulant "À propos"
-# ─────────────────────────────────────────
 with st.expander("ℹ️ À propos de ce projet (Crédits)"):
     st.write("Ce simulateur a été développé dans le cadre des travaux pratiques de Licence 3 Électromécanique.")
-    
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("**🎓 Réalisé par :**")
@@ -34,13 +27,9 @@ with st.expander("ℹ️ À propos de ce projet (Crédits)"):
     with col2:
         st.markdown("**👨‍🏫 Encadré par :**")
         st.markdown("- Dr. N. Benbouza")
-        
     st.markdown("**📅 Année universitaire :** 2025/2026")
 
-
-# ─────────────────────────────────────────
-# 5. Introduction de l'application
-# ─────────────────────────────────────────
+# 5. Introduction
 st.markdown("""
 Cette application pédagogique permet d’étudier une Machine à Courant Continu en **régime permanent**
 et en **régime dynamique**. Elle permet de modifier les paramètres de la machine et d’observer
@@ -70,15 +59,15 @@ Umax = st.sidebar.number_input("Limite de tension Umax (V)", value=24.0, step=1.
 t_final = st.sidebar.number_input("Durée de simulation (s)", value=4.0, step=0.5)
 
 # =========================================================
-# Fonctions utiles
+# Fonctions mathématiques (UNIQUES ET CORRIGÉES)
 # =========================================================
 def limiter(x, xmin, xmax):
     return np.minimum(np.maximum(x, xmin), xmax)
 
-def modele_boucle_ouverte(t, y, U, Cr_val):
+def modele_boucle_ouverte(t, y):
     I, omega = y
-    dI = (U - R * I - K * omega) / L
-    domega = (K * I - Cr_val - f * omega) / J
+    dI = (U_nom - R * I - K * omega) / L
+    domega = (K * I - Cr - f * omega) / J
     return [dI, domega]
 
 def modele_P(t, y):
@@ -111,6 +100,7 @@ def afficher_figure(fig):
     st.pyplot(fig)
     plt.close(fig)
 
+# Création des onglets
 tab1, tab2, tab3 = st.tabs(["1. Régime permanent", "2. Régime dynamique", "3. Conclusion"])
 
 # =========================================================
@@ -118,14 +108,12 @@ tab1, tab2, tab3 = st.tabs(["1. Régime permanent", "2. Régime dynamique", "3. 
 # =========================================================
 with tab1:
     st.header("Étude en régime permanent")
-
     I = np.linspace(0, 40, 300)
     U_values = np.linspace(0, 30, 300)
     phi_vals = [1.0, 0.8, 0.6]
     Rs_vals = [0.0, 0.2, 0.5]
 
     col1, col2 = st.columns(2)
-
     with col1:
         C = K * I
         fig, ax = plt.subplots()
@@ -149,7 +137,6 @@ with tab1:
         st.markdown("Lorsque le courant augmente, la chute de tension interne augmente et la vitesse diminue.")
 
     col3, col4 = st.columns(2)
-
     with col3:
         I_const = 10
         omega_U = (U_values - R * I_const) / K
@@ -175,7 +162,6 @@ with tab1:
         st.markdown("La vitesse diminue lorsque le couple demandé augmente.")
 
     col5, col6 = st.columns(2)
-
     with col5:
         fig, ax = plt.subplots()
         for phi in phi_vals:
@@ -204,80 +190,15 @@ with tab1:
         st.markdown("Lorsque la résistance série augmente, la vitesse diminue à cause de la chute de tension.")
 
 # =========================================================
-# Fonctions mathématiques (À placer AVANT l'onglet dynamique)
-# =========================================================
-
-# Modèle en boucle ouverte (Équations différentielles de la MCC)
-def modele_boucle_ouverte(t, y, U, Cr):
-    I, omega = y
-    dI_dt = (U - R * I - K * omega) / L
-    domega_dt = (K * I - Cr - f * omega) / J
-    return [dI_dt, domega_dt]
-
-# Modèle avec Correcteur Proportionnel (P)
-def modele_P(t, y):
-    I, omega = y
-    erreur = omega_ref - omega
-    U_commande = np.clip(Kp * erreur, -Umax, Umax)
-    dI_dt = (U_commande - R * I - K * omega) / L
-    domega_dt = (K * I - Cr - f * omega) / J
-    return [dI_dt, domega_dt]
-
-# Modèle avec Correcteur Proportionnel-Intégral (PI)
-def modele_PI(t, y):
-    I, omega, erreur_integrale = y
-    erreur = omega_ref - omega
-    d_erreur_int = erreur
-    U_commande = np.clip(Kp * erreur + Ki * erreur_integrale, -Umax, Umax)
-    
-    dI_dt = (U_commande - R * I - K * omega) / L
-    domega_dt = (K * I - Cr - f * omega) / J
-    return [dI_dt, domega_dt, d_erreur_int]
-
-# Fonction d'affichage simplifiée
-def afficher_figure(fig):
-    st.pyplot(fig)
-    plt.close(fig)
-
-# Calcul des métriques de performance
-def calcul_metriques(t, w, w_ref):
-    omega_max = np.max(w)
-    valeur_finale = w[-1]
-    
-    # Dépassement (%)
-    if valeur_finale > 0:
-        dep = max(0, (omega_max - valeur_finale) / valeur_finale * 100)
-    else:
-        dep = 0.0
-        
-    # Erreur statique (%)
-    if w_ref > 0:
-        err_stat = abs(w_ref - valeur_finale) / w_ref * 100
-    else:
-        err_stat = 0.0
-        
-    # Temps de réponse à 95% (tr95)
-    tr95 = np.nan
-    for i in range(len(t)):
-        if all(abs(w[k] - valeur_finale) <= 0.05 * abs(valeur_finale) for k in range(i, len(t))):
-            tr95 = t[i]
-            break
-            
-    return omega_max, dep, err_stat, tr95
-
-# =========================================================
 # Onglet 2 : régime dynamique
 # =========================================================
 with tab2:
     st.header("Étude dynamique")
-
-    # ... (Votre code reste exactement le même ici, pas de changement nécessaire) ...
-    # ... (Voir votre extrait original pour la création des figures) ...
-
     t_eval = np.linspace(0, t_final, 1000)
 
+    # Appel corrigé de la boucle ouverte
     sol_bo = solve_ivp(
-        lambda t, y: modele_boucle_ouverte(t, y, U_nom, Cr),
+        modele_boucle_ouverte,
         [0, t_final], [0, 0], t_eval=t_eval, rtol=1e-6, atol=1e-8
     )
 
@@ -301,7 +222,6 @@ with tab2:
     Cem_pi = K * I_pi
 
     col1, col2 = st.columns(2)
-
     with col1:
         fig, ax = plt.subplots()
         ax.plot(t, w_bo, linewidth=2, label="Boucle ouverte")
@@ -342,7 +262,6 @@ with tab2:
     afficher_figure(fig)
 
     omega_max, dep, err_stat, tr95 = calcul_metriques(t, w_pi, omega_ref)
-
     st.subheader("Métriques de performance pour la commande PI")
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Ω max", f"{omega_max:.2f} rad/s")
@@ -357,4 +276,19 @@ with tab2:
 # Onglet 3 : conclusion (Enrichie)
 # =========================================================
 with tab3:
-    st.header("Conclusion et
+    st.header("Conclusion et Perspectives")
+    st.markdown("""
+    L’étude en régime permanent de la Machine à Courant Continu a permis de mettre en évidence l’influence 
+    directe de la tension d’induit, du flux d’excitation et du couple résistant sur la vitesse de rotation.
+
+    L’analyse en régime dynamique démontre le comportement transitoire du moteur. Si la commande en boucle 
+    ouverte s'avère insuffisante face aux perturbations, l'intégration d'un correcteur Proportionnel (P) 
+    améliore la réactivité. L'ajout de l'action intégrale (Correcteur PI) est quant à lui indispensable 
+    pour annuler l'erreur statique et garantir un suivi parfait de la consigne.
+
+    **Perspectives pédagogiques :**
+    Ce projet valide l'intérêt majeur des outils de simulation numériques pour la modernisation de l'enseignement. 
+    À l'instar de l'application développée en parallèle sur le transformateur de puissance, ce simulateur 
+    sera intégré comme support de travaux pratiques pour les futures promotions de Licence 3, afin de 
+    renforcer l'assimilation des stratégies de commande complexes par une approche visuelle et interactive.
+    """)
