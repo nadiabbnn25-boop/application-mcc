@@ -8,12 +8,6 @@ from scipy.integrate import solve_ivp  # <--- LA LIGNE À AJOUTER EST ICI !
 # 2. Configuration de la page
 st.set_page_config(page_title="PFE MCC", layout="wide")
 
-# ... (le reste du code)
-
-# ... (le reste du code) 
-
-# 2. Configuration de la page (DOIT ÊTRE LA PREMIÈRE COMMANDE STREAMLIT)
-st.set_page_config(page_title="PFE MCC", layout="wide")
 
 # ─────────────────────────────────────────
 # 3. En-tête et Titre
