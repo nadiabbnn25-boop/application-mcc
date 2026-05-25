@@ -1,23 +1,17 @@
-# 1. Les importations (TOUT EN HAUT DU FICHIER)
+# 1. Les importations
 import streamlit as st
 import numpy as np  
 import matplotlib.pyplot as plt
 import pandas as pd  
-from scipy.integrate import solve_ivp  # <--- LA LIGNE À AJOUTER EST ICI !
+from scipy.integrate import solve_ivp  
 
-# 2. Configuration de la page
+# 2. L'UNIQUE configuration de la page (gardez seulement celle-ci !)
 st.set_page_config(page_title="PFE MCC", layout="wide")
 
-
-# ─────────────────────────────────────────
-# 3. En-tête et Titre
-# ─────────────────────────────────────────
-# Nom de l'université
+# 3. La suite de votre code (Université, Titre, etc.)
 st.markdown("<div style='text-align: center; font-size: 26px; color: #2C3E50; margin-bottom: 10px;'>Université Batna 2<br>Département d'Électromécanique</div>", unsafe_allow_html=True)
-st.markdown("---")
+# ...
 
-# Le grand titre de l'étude (SANS LE ") EN TROP EN DESSOUS !)
-st.title("Étude théorique et simulation des méthodes de commande de la Machine à Courant Continu (MCC)")
 
 # Le sous-titre
 st.markdown("<h3 style='text-align: center; color: #555555; font-weight: normal; margin-top: -15px;'>Développement d’une application web pédagogique interactive</h3>", unsafe_allow_html=True)
