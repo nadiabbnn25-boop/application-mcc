@@ -1,11 +1,29 @@
+# 1. Les importations (TOUT EN HAUT DU FICHIER)
 import streamlit as st
-import numpy as np
+import numpy as np  
 import matplotlib.pyplot as plt
-from scipy.integrate import solve_ivp
+import pandas as pd  # <--- LA LIGNE À AJOUTER EST ICI !
 
-st.set_page_config(page_title="Simulation MCC", layout="wide")
+# 2. Configuration de la page
+st.set_page_config(page_title="PFE Transformateur", layout="wide")
 
-st.title("Étude et simulation de la commande d’une Machine à Courant Continu")
+# ... (le reste de votre code, Université Batna 2, Crédits, etc.) ...
+
+# ─────────────────────────────────────────
+# 3. En-tête et Titre
+# ─────────────────────────────────────────
+# Nom de l'université (sans les crochets pour faire plus officiel)
+# 1. Nom de l'université en GRAND, centré, mais avec une épaisseur de texte normale
+st.markdown("<div style='text-align: center; font-size: 26px; color: #2C3E50; margin-bottom: 10px;'>Université Batna 2<br>Département  d'Électromecanique</div>", unsafe_allow_html=True)
+st.markdown("---")
+
+# 2. Le grand titre de l'étude
+st.title("Étude théorique et simulation des méthodes de commande de la Machine à Courant Continu (MCC)
+")
+
+# 3. Le sous-titre (La phrase de votre image)
+st.markdown("<h3 style='text-align: center; color: #555555; font-weight: normal; margin-top: -15px;'> Développement d’une application web pédagogique interactive</h3>", unsafe_allow_html=True)
+
 
 st.markdown("""
 Cette application pédagogique permet d’étudier une Machine à Courant Continu en **régime permanent**
@@ -34,6 +52,30 @@ Ki = st.sidebar.number_input("Gain intégral Ki", value=10.0, step=1.0)
 
 Umax = st.sidebar.number_input("Limite de tension Umax (V)", value=24.0, step=1.0)
 t_final = st.sidebar.number_input("Durée de simulation (s)", value=4.0, step=0.5)
+# ─────────────────────────────────────────
+# 4. Menu déroulant "À propos"
+# ─────────────────────────────────────────
+with st.expander("ℹ️ À propos de ce projet (Crédits)"):
+    # J'ai gardé uniquement "Électrotechnique" pour être en accord avec votre département, mais vous pouvez remettre "Électromécanique" si besoin.
+    st.write("Ce simulateur a été développé dans le cadre des travaux pratiques de Licence 3 Électrotechnique.")
+    
+    # Création de deux colonnes pour une belle présentation
+# Création de deux colonnes pour une belle présentation
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("**🎓 Réalisé par :**")
+        st.markdown("""
+- M.A.A BACHA M                
+- Y BASSOU             
+- A ENAMMAR 
+        """)
+        
+    with col2:
+        st.markdown("**👨‍🏫 Encadré par :**")
+        st.markdown("- Dr. N. Benbouza")
+        
+    st.markdown("**📅 Année universitaire :** 2025/2026")
 
 # =========================================================
 # Fonctions utiles
