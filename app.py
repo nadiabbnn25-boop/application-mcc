@@ -192,29 +192,14 @@ with tab1:
 # =========================================================
 # Onglet 2 : régime dynamique
 # =========================================================
-# =========================================================
-# Onglet 2 : régime dynamique
-# =========================================================
 with tab2:
     st.header("Étude dynamique")
     
     # ─────────────────────────────────────────
-    # LA CORRECTION EST ICI : 
-    # On force l'importation locale de solve_ivp
+    # CORRECTION : Importation locale forcée de solve_ivp
     # ─────────────────────────────────────────
     from scipy.integrate import solve_ivp
-    
-    t_eval = np.linspace(0, t_final, 1000)
 
-    # Appel de la boucle ouverte
-    sol_bo = solve_ivp(
-        modele_boucle_ouverte,
-        [0, t_final], [0, 0], t_eval=t_eval, rtol=1e-6, atol=1e-8
-    )
-    
-    # ... (le reste de votre code de l'onglet 2 reste identique)
-with tab2:
-    st.header("Étude dynamique")
     t_eval = np.linspace(0, t_final, 1000)
 
     # Appel corrigé de la boucle ouverte
@@ -292,24 +277,3 @@ with tab2:
         c4.metric("Temps à 95 %", "Non atteint")
     else:
         c4.metric("Temps à 95 %", f"{tr95:.3f} s")
-
-# =========================================================
-# Onglet 3 : conclusion (Enrichie)
-# =========================================================
-with tab3:
-    st.header("Conclusion et Perspectives")
-    st.markdown("""
-    L’étude en régime permanent de la Machine à Courant Continu a permis de mettre en évidence l’influence 
-    directe de la tension d’induit, du flux d’excitation et du couple résistant sur la vitesse de rotation.
-
-    L’analyse en régime dynamique démontre le comportement transitoire du moteur. Si la commande en boucle 
-    ouverte s'avère insuffisante face aux perturbations, l'intégration d'un correcteur Proportionnel (P) 
-    améliore la réactivité. L'ajout de l'action intégrale (Correcteur PI) est quant à lui indispensable 
-    pour annuler l'erreur statique et garantir un suivi parfait de la consigne.
-
-    **Perspectives pédagogiques :**
-    Ce projet valide l'intérêt majeur des outils de simulation numériques pour la modernisation de l'enseignement. 
-    À l'instar de l'application développée en parallèle sur le transformateur de puissance, ce simulateur 
-    sera intégré comme support de travaux pratiques pour les futures promotions de Licence 3, afin de 
-    renforcer l'assimilation des stratégies de commande complexes par une approche visuelle et interactive.
-    """)
