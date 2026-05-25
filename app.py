@@ -37,14 +37,7 @@ with st.expander("ℹ️ À propos de ce projet (Crédits)"):
         
     st.markdown("**📅 Année universitaire :** 2025/2026")
 
-# ─────────────────────────────────────────
-# 5. Introduction de l'application
-# ─────────────────────────────────────────
-st.markdown("""
-Cette application pédagogique permet d’étudier une Machine à Courant Continu en **régime permanent**
-et en **régime dynamique**. Elle permet de modifier les paramètres de la machine et d’observer
-les courbes principales.
-""")
+
 # ─────────────────────────────────────────
 # 5. Introduction de l'application
 # ─────────────────────────────────────────
